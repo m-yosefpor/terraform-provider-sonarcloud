@@ -9,14 +9,14 @@ terraform {
 
 provider "sonarcloud" {
   token    = var.sonarcloud_token
-  organization = "bitvavo"
+  organization = var.organization
 }
 
 resource "sonarcloud_project" "example" {
   project_key  = "bitvavo_crypto-data-aggregation-service"
   name         = "crypto-data-aggregation-service"
   visibility   = "private"
-  organization = "bitvavo"
+  organization = var.organization
   new_code_definition_type = "days"
   new_code_definition_value = "30"
 }
@@ -33,8 +33,20 @@ resource "sonarcloud_project" "example" {
 
 resource "sonarcloud_qualitygates_select" "example" {
   project_key     = sonarcloud_project.example.project_key
+  organization = var.organization
   quality_gate_id = 117724
 }
 
+# resource "sonarcloud_qualitygates_select" "example2" {
+#   project_key     = "bitvavo_frontend-hermes"
+#   organization = var.organization
+#   quality_gate_id = 117724
+# }
+
+
 variable "sonarcloud_token" {
+}
+
+variable "organization" {
+  default = "bitvavo"
 }

@@ -30,6 +30,12 @@ func resourceQualityGatesSelect() *schema.Resource {
 				Description: "The ID of the quality gate to select.",
 				ForceNew:    true,
 			},
+			"organization": {
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The name of organization.",
+				ForceNew:    true,
+			},
 		},
 	}
 }
@@ -39,10 +45,12 @@ func resourceQualityGatesSelectCreate(ctx context.Context, d *schema.ResourceDat
 
 	projectKey := d.Get("project_key").(string)
 	qualityGateID := d.Get("quality_gate_id").(int)
+	organization := d.Get("organization").(string)
 
 	req := qualitygates.SelectRequest{
-		ProjectKey: projectKey,
-		GateId:     strconv.Itoa(qualityGateID),
+		ProjectKey:   projectKey,
+		Organization: organization,
+		GateId:       strconv.Itoa(qualityGateID),
 	}
 
 	if err := client.Qualitygates.Select(req); err != nil {
@@ -57,9 +65,11 @@ func resourceQualityGatesSelectRead(ctx context.Context, d *schema.ResourceData,
 	client := m.(*sonarcloud.Client)
 
 	projectKey := d.Get("project_key").(string)
+	organization := d.Get("organization").(string)
 
 	req := qualitygates.GetByProjectRequest{
-		Project: projectKey,
+		Project:      projectKey,
+		Organization: organization,
 	}
 
 	resp, err := client.Qualitygates.GetByProject(req)
@@ -78,9 +88,11 @@ func resourceQualityGatesSelectDelete(ctx context.Context, d *schema.ResourceDat
 	client := m.(*sonarcloud.Client)
 
 	projectKey := d.Get("project_key").(string)
+	organization := d.Get("organization").(string)
 
 	req := qualitygates.DeselectRequest{
-		ProjectKey: projectKey,
+		ProjectKey:   projectKey,
+		Organization: organization,
 	}
 
 	if err := client.Qualitygates.Deselect(req); err != nil {
