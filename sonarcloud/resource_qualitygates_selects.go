@@ -22,11 +22,13 @@ func resourceQualityGatesSelect() *schema.Resource {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "The key of the project.",
+				ForceNew:    true,
 			},
 			"quality_gate_id": {
 				Type:        schema.TypeInt,
 				Required:    true,
 				Description: "The ID of the quality gate to select.",
+				ForceNew:    true,
 			},
 		},
 	}
