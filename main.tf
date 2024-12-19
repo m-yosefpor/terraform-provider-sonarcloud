@@ -31,5 +31,10 @@ resource "sonarcloud_project" "example" {
 # }
 
 
+resource "sonarcloud_qualitygates_select" "example" {
+  project_key     = sonarcloud_project.example.project_key
+  quality_gate_id = 117724
+}
+
 variable "sonarcloud_token" {
 }

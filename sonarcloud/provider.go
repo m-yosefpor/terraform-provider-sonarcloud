@@ -27,7 +27,8 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"sonarcloud_project": resourceSonarcloudProject(),
+			"sonarcloud_project":             resourceSonarcloudProject(),
+			"sonarcloud_qualitygates_select": resourceQualityGatesSelect(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}

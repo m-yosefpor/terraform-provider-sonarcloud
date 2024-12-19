@@ -3,6 +3,7 @@ package sonarcloud
 import (
 	"context"
 	"fmt"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -38,11 +39,11 @@ func resourceQualityGatesSelectCreate(ctx context.Context, d *schema.ResourceDat
 	qualityGateID := d.Get("quality_gate_id").(int)
 
 	req := qualitygates.SelectRequest{
-		ProjectKey:    projectKey,
-		QualityGateID: qualityGateID,
+		ProjectKey: projectKey,
+		GateId:     strconv.Itoa(qualityGateID),
 	}
 
-	if err := client.QualityGates.Select(req); err != nil {
+	if err := client.Qualitygates.Select(req); err != nil {
 		return diag.FromErr(fmt.Errorf("error selecting quality gate: %w", err))
 	}
 
@@ -56,15 +57,15 @@ func resourceQualityGatesSelectRead(ctx context.Context, d *schema.ResourceData,
 	projectKey := d.Get("project_key").(string)
 
 	req := qualitygates.GetByProjectRequest{
-		ProjectKey: projectKey,
+		Project: projectKey,
 	}
 
-	resp, err := client.QualityGates.GetByProject(req)
+	resp, err := client.Qualitygates.GetByProject(req)
 	if err != nil {
 		return diag.FromErr(fmt.Errorf("error reading quality gate: %w", err))
 	}
 
-	if err := d.Set("quality_gate_id", resp.QualityGate.ID); err != nil {
+	if err := d.Set("quality_gate_id", resp.QualityGate.Id); err != nil {
 		return diag.FromErr(err)
 	}
 
@@ -80,7 +81,7 @@ func resourceQualityGatesSelectDelete(ctx context.Context, d *schema.ResourceDat
 		ProjectKey: projectKey,
 	}
 
-	if err := client.QualityGates.Deselect(req); err != nil {
+	if err := client.Qualitygates.Deselect(req); err != nil {
 		return diag.FromErr(fmt.Errorf("error deselecting quality gate: %w", err))
 	}
 
