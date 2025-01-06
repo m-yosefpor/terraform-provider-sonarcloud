@@ -32,6 +32,8 @@ resource "sonarcloud_qualitygates_select" "projects" {
   quality_gate_id = 117724
 }
 
+
+
 variable "sonarcloud_token" {
 }
 
