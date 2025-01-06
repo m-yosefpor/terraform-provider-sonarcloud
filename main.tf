@@ -41,13 +41,6 @@ resource "sonarcloud_qualitygates_select" "projects" {
   quality_gate_id = 117724
 }
 
-# resource "sonarcloud_qualitygates_select" "example2" {
-#   project_key     = "bitvavo_frontend-hermes"
-#   organization = var.organization
-#   quality_gate_id = 117724
-# }
-
-
 variable "sonarcloud_token" {
 }
 
