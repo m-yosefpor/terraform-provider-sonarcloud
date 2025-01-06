@@ -23,15 +23,6 @@ resource "sonarcloud_project" "projects" {
   new_code_definition_value = "30"
 }
 
-# resource "sonarcloud_project" "example2" {
-#   project_key  = "bitvavo_matt_test2"
-#   name         = "My Project 2"
-#   visibility   = "private"
-#   organization = "bitvavo"
-#   new_code_definition_type = "days"
-#   new_code_definition_value = "30"
-# }
-
 
 resource "sonarcloud_qualitygates_select" "projects" {
   for_each = sonarcloud_project.projects
