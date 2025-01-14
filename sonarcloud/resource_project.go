@@ -73,6 +73,22 @@ func resourceSonarcloudProjectCreate(ctx context.Context, d *schema.ResourceData
 	ncdType := d.Get("new_code_definition_type").(string)
 	ncdValue := d.Get("new_code_definition_value").(string)
 
+	// Check if the project already exists
+	searchReq := projects.SearchRequest{
+		Organization: org,
+		Projects:     key,
+	}
+	searchResp, err := client.Projects.Search(searchReq, paging.Params{})
+	if err != nil {
+		return diag.FromErr(fmt.Errorf("error checking if sonarcloud project exists: %w", err))
+	}
+
+	if len(searchResp.Components) > 0 {
+		// Project already exists, set the ID and return
+		d.SetId(searchResp.Components[0].Key)
+		return resourceSonarcloudProjectRead(ctx, d, m)
+	}
+
 	req := projects.CreateRequest{
 		Organization:           org,
 		Project:                key,

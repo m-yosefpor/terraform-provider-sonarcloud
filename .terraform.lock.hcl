@@ -5,6 +5,6 @@ provider "local/m-yosefpor/sonarcloud" {
   version     = "1.0.0"
   constraints = "1.0.0"
   hashes = [
-    "h1:06iW8XHNaLsELG7in9H41yO9gtFthNSMcqKOJea9EhA=",
+    "h1:3tp2VmbN1o3XKxjF7yaObcohc9Acvrwtws3+15x3o70=",
   ]
 }

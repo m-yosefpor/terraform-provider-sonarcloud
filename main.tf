@@ -33,7 +33,6 @@ resource "sonarcloud_qualitygates_select" "projects" {
 }
 
 
-
 variable "sonarcloud_token" {
 }
 
